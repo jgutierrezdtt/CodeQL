@@ -1,0 +1,42 @@
+name: "CodeQL Scan - Java"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  analyze:
+    name: Analyze Java Code
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: java
+        queries: java
+        packs: |
+          githubsecuritylab/codeql-java-queries
+          githubsecuritylab/codeql-java-library-sources
+          githubsecuritylab/codeql-java-extensions
+        config: |
+          paths-ignore:
+            - 'logs/**'
+            - 'generated/**'
+            - 'out/**'
+
+    - name: Build project
+      run: |
+        # Configura el sistema de construcción según tu proyecto
+        ./gradlew build --no-daemon
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
