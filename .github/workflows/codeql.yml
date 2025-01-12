@@ -9,7 +9,7 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
-name: "CodeQL Advanced"
+name: "CodeQL Advanced with Community Packs"
 
 on:
   push:
@@ -43,12 +43,16 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - language: java-kotlin
+        - language: java
           build-mode: autobuild
-        # CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
-        # Use `c-cpp` to analyze code written in C, C++ or both
-        # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
-        # Use 'javascript-typescript' to analyze code written in JavaScript, TypeScript or both
+        - language: javascript
+          build-mode: autobuild
+        - language: cpp
+          build-mode: autobuild
+        # CodeQL supports the following language aliases: cpp, csharp, go, java, javascript, python, ruby, swift
+        # Use `cpp` to analyze code written in C, C++ or both
+        # Use 'java' to analyze code written in Java or Kotlin
+        # Use 'javascript' to analyze code written in JavaScript or TypeScript
         # To learn more about changing the languages that are analyzed or customizing the build mode for your analysis,
         # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
@@ -57,16 +61,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # Initializes the CodeQL tools for scanning.
+    # Initializes the CodeQL tools for scanning, with community packs
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
-        # Add Community Packs to leverage additional security and quality rules.
-        packs: |
-          github/codeql-community/community-extended
-          github/codeql-community/community-security
+        # Use the recommended community packs for additional rules and queries
+        packs: githubsecuritylab/codeql-${{ matrix.language }}-queries
 
     # If the analyze step fails for one of the languages you are analyzing with
     # "We were unable to automatically build your code", modify the matrix above
