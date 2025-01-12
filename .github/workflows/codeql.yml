@@ -63,17 +63,8 @@ jobs:
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
-        # If you wish to specify custom queries, you can do so here or in a config file.
-        # By default, queries listed here will override any specified in a config file.
-        # Prefix the list here with "+" to use these queries and those in the config file.
-
-        # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
-        # queries: security-extended,security-and-quality
-
-        # Add Community Packs to leverage additional security and quality rules.
+        # Use Community Packs to leverage additional security and quality rules.
         packs: |
-          github/codeql:security-extended
-          github/codeql:security-and-quality
           github/codeql-community/community-extended
           github/codeql-community/community-security
 
