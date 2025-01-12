@@ -33,7 +33,7 @@ jobs:
       security-events: write
 
       # required to fetch internal or private CodeQL packs
-      packages: read
+      packages: write
 
       # only required for workflows in private repositories
       actions: read
@@ -72,10 +72,10 @@ jobs:
 
         # Add Community Packs to leverage additional security and quality rules.
         packs: |
-          github/codeql:security-extended
-          github/codeql:security-and-quality
-          github/codeql-community:community-extended
-          github/codeql-community:community-security
+          codeql/java-queries:latest
+          codeql/javascript-queries:latest
+          codeql-community/community-extended:latest
+          codeql-community/community-security:latest
 
     # If the analyze step fails for one of the languages you are analyzing with
     # "We were unable to automatically build your code", modify the matrix above
